@@ -20,8 +20,8 @@ import ListItem from '~/components/home/list-item'
 import TitleRow from '~/components/home/title-row'
 import MetaRow from '~/components/home/meta-row'
 import ActionRow from '~/components/home/action-row'
-
-const getData = (store, params, self) => {
+import * as dataFetch from '~/data/index'
+const handleParams = (params) => {
   let category = ''
   switch (params.category) {
     case 'frontend':
@@ -53,6 +53,10 @@ const getData = (store, params, self) => {
     ab: 'welcome_3',
     src: 'web'
   }
+  return param
+}
+const getData = (store, params, self) => {
+  let param = handleParams(params)
   return new Promise(resolve => {
     store.dispatch('entries', param).then(res => {
       if (self) {
@@ -85,8 +89,9 @@ export default {
       entries: []
     }
   },
-  async asyncData ({ store, params }) {
-    let res = await getData(store, params)
+  async asyncData ({ app, params }) {
+    let param = handleParams(params)
+    let res = await dataFetch.getEntriesData(app, param)
     return {
       entries: res.d.entrylist
     }

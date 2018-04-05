@@ -18,23 +18,23 @@ import * as asyncData from '~/data/index.js'
     }
  */
 
-
 export const banner = async (store, params) => {
-  var data = await asyncData.getBannerData()
+  var data = await asyncData.getBannerData(store, params)
   return data
 }
 
 export const categories = async (store, params) => {
-  var data = await asyncData.getCategoriesData()
+  var data = await asyncData.getCategoriesData(store, params)
   return data
 }
 
 export const recommend = async (store, params) => {
-  var data = await axios.get(`${rapi}/v1/get_recommended_entry`, params)
+  var data = await asyncData.getRecommendData(store, params)
   return data
 }
 
 export const entries = async (store, params) => {
-  var data = await axios.get(`${tapi}/v1/get_entry_by_rank`, params)
+  var data = await asyncData.getEntriesData(store, params)
+  console.log(data)
   return data
 }

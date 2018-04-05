@@ -18,12 +18,14 @@
 import ListItem from '~/components/home/list-item'
 import TitleRow from '~/components/home/title-row'
 import MetaRow from '~/components/home/meta-row'
-const getData = (store, self, callBack) => {
-  let params = {
-    suid: 'aemu3ZqVijiqQj2QEFiB',
-    ab: 'welcome_3',
-    src: 'web'
-  }
+import * as dataFetch from '~/data/index'
+const pubParams = {
+  suid: 'aemu3ZqVijiqQj2QEFiB',
+  ab: 'welcome_3',
+  src: 'web'
+}
+const getData = (store, self) => {
+  let params = pubParams
   return new Promise(resolve => {
     store.dispatch('recommend', params).then(res => {
       if (self) {
@@ -55,8 +57,8 @@ export default {
       recommends: []
     }
   },
-  async asyncData ({ app, store, error }) {
-    let res = await getData(store, app, true)
+  async asyncData ({ app, error }) {
+    let res = await dataFetch.getRecommendData(app, pubParams)
     return {
       recommends: res.d
     }

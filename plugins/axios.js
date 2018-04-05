@@ -2,6 +2,7 @@ import qs from 'qs'
 
 export default function ({ $axios, redirect }) {
   $axios.onRequest(config => {
+    config.timeout = 5000
     // if the requestMethod is POST, You should change you data transfer Type
     if (config.method === 'post') {
       config.withCredentials = true
@@ -26,7 +27,6 @@ export default function ({ $axios, redirect }) {
     //   })
     //   return Promise.reject(res)
     // }
-    return res.data
   }, (error) => {
     // if (error.response.status === 403) {
     //   Message({
